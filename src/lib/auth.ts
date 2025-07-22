@@ -1,5 +1,4 @@
-import type { NextAuthConfig } from 'next-auth'
-import type { NextAuthOptions } from 'next-auth'
+import { NextAuthOptions } from 'next-auth'
 import Github from 'next-auth/providers/github'
 
 
@@ -14,8 +13,8 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async redirect({ baseUrl }) {
-      return "/"
+    async redirect({ baseUrl }: { baseUrl: string }) {
+      return baseUrl
     },
   },
-} satisfies NextAuthConfig
+}
