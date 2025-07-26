@@ -3,8 +3,8 @@ import '../globals.css'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import { SignOut } from '@/components/sign-out-button'
 import { Header } from '@/components/header'
+import { userHasRegistered } from '@/lib/actions/has-user-registered'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

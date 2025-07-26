@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { userHasRegistered } from "@/lib/actions/has-user-registered";
 
-export default function Page() {
+export default async function Page() {
+await userHasRegistered();
+
   return (
     <div className="flex gap-4 justify-center">
       <Card className="w-250">
