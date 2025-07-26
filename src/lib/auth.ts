@@ -1,6 +1,6 @@
-import { neon } from "@neondatabase/serverless";
 import { NextAuthOptions } from "next-auth";
 import Github from "next-auth/providers/github";
+import { sql } from "./db";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,7 +16,6 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user?.email) {
         // todo: enventually pluck this out so we don't do it on every login
-        const sql = neon(process.env.DATABASE_URL ?? "");
         const data =
           await sql`SELECT id FROM users WHERE email = ${user?.email}`;
         if (data.length !== 0) {

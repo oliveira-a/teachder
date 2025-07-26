@@ -6,7 +6,9 @@ import { redirect } from 'next/navigation';
 
 
 export async function userHasRegistered() {
-    const session = getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
     
-    redirect("/skillset")
+    if (!session?.user.id) {
+        redirect("/skillset")
+    }
 }

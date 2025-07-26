@@ -1,7 +1,5 @@
-import { neon } from "@neondatabase/serverless";
 import { getUserEmail } from "../utils";
-
-const sql = neon(process.env.DATABASE_URL ?? "")
+import { sql } from "../db";
 
 export async function getUserLearningSkills(): Promise<string[]> {
     const ctxUserEmail = await getUserEmail()
