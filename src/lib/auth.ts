@@ -10,11 +10,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/",
   },
   callbacks: {
     async redirect({ baseUrl }: { baseUrl: string }) {
-      return baseUrl
+      return baseUrl + "/dashboard"
     },
   },
 }

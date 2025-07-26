@@ -23,9 +23,8 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    redirect("/login");
+    redirect("/");
   }
-  console.log(session);
 
   return (
     <html lang="en">
@@ -46,4 +45,3 @@ export default async function RootLayout({
     </html>
   );
 }
-
