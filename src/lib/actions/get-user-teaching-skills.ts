@@ -1,17 +1,21 @@
-import { neon } from "@neondatabase/serverless";
 import { getUserEmail } from "../utils";
+import { Skill } from "../models";
+import { sql } from "../db";
 
-const sql = neon(process.env.DATABASE_URL ?? "")
+export async function getUserTeachingSkills(): Promise<Skill[]> {
+  const ctxUserEmail = await getUserEmail();
+  const user = await sql`SELECT id FROM users WHERE Email = ${ctxUserEmail}`;
+  const id = user[0].id;
 
-export async function getUserTeachingSkills(): Promise<string[]> {
-    const ctxUserEmail = await getUserEmail()
-    const user = await sql`SELECT id FROM users WHERE Email = ${ctxUserEmail}`
-    const id = user[0].id
-
-    const results = await sql`SELECT s.skill_name
+  const results = await sql`SELECT s.skill_name
                               FROM teaching_skills ts
                               JOIN skills s ON ts.skill_id = s.id
                               WHERE ts.user_id = ${id}`;
 
-    return results.map(i => i.skill_name)
+  return results.map((i) => {
+    return {
+      name: i.skill_name,
+      id: i.id,
+    };
+  });
 }

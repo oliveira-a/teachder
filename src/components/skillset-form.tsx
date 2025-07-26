@@ -1,21 +1,22 @@
 'use client'
 
+import { Skill } from "@/lib/models";
 import { SkillInput } from "./skills-input";
 
 interface SkillSetFormProps {
-    skillsToLearn: string[]
-    skillsToTeach: string[]
+    skillsToLearn: Skill[]
+    skillsToTeach: Skill[]
 }
 
 export function SkillsetForm(props: SkillSetFormProps) {
-  var skillsToLearn: string[] = props.skillsToLearn
-  var skillsToTeach: string[] = props.skillsToTeach
+  var skillsToLearn: Skill[] = props.skillsToLearn
+  var skillsToTeach: Skill[] = props.skillsToTeach
 
-  const onLearnSkillInputChange = (updated: string[]) => {
+  const onLearnSkillInputChange = (updated: Skill[]) => {
     skillsToLearn = updated;
   };
 
-  const onTeachSkillInputChange = (updated: string[]) => {
+  const onTeachSkillInputChange = (updated: Skill[]) => {
     skillsToTeach = updated;
   };
 

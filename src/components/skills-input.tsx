@@ -4,29 +4,30 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { X } from 'lucide-react';
+import { Skill } from '@/lib/models';
 
 export function SkillInput({
   onChange,
   initialSkills = [],
 }: {
-  onChange?: (skills: string[]) => void;
-  initialSkills?: string[];
+  onChange?: (skills: Skill[]) => void;
+  initialSkills?: Skill[];
 }) {
-  const [skills, setSkills] = useState<string[]>(initialSkills);
+  const [skills, setSkills] = useState<Skill[]>(initialSkills);
   const [inputValue, setInputValue] = useState('');
 
   const addSkill = (skill: string) => {
     const trimmed = skill.trim();
-    if (!trimmed || skills.includes(trimmed)) return;
+    if (!trimmed || skills.map(i => i.name).includes(trimmed)) return;
 
-    const updated = [...skills, trimmed];
+    const updated = [...skills, { name: trimmed }];
     setSkills(updated);
     onChange?.(updated);
     setInputValue('');
   };
 
   const removeSkill = (skill: string) => {
-    const updated = skills.filter((s) => s !== skill);
+    const updated = skills.filter((s) => s.name !== skill);
     setSkills(updated);
     onChange?.(updated);
   };
@@ -37,7 +38,7 @@ export function SkillInput({
       addSkill(inputValue);
     }
     if (e.key === 'Backspace' && !inputValue && skills.length) {
-      removeSkill(skills[skills.length - 1]);
+      removeSkill(skills[skills.length - 1].name);
     }
   };
 
@@ -46,14 +47,14 @@ export function SkillInput({
       <div className="flex flex-wrap gap-2">
         {skills.map((skill) => (
           <Badge
-            key={skill}
+            key={skill.name}
             variant="secondary"
             className="flex items-center gap-1 pr-1"
           >
-            {skill}
+            {skill.name}
             <button
               type="button"
-              onClick={() => removeSkill(skill)}
+              onClick={() => removeSkill(skill.name)}
               className="hover:text-red-500 ml-1"
             >
               <X className="h-3 w-3" />
